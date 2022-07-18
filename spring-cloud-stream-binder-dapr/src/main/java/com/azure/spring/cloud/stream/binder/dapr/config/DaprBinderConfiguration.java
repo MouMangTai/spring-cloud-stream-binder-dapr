@@ -75,9 +75,25 @@ public class DaprBinderConfiguration {
 
 	@Bean
 	@ConditionalOnMissingBean
-	public DaprGrpc.DaprStub daprStub(ManagedChannelBuilder managedChannelBuilder) {
+	public ManagedChannel managedChannel(ManagedChannelBuilder managedChannelBuilder) {
 		ManagedChannel channel = managedChannelBuilder.build();
-		return DaprGrpc.newStub(channel);
+		return channel;
+	}
+
+	@Bean
+	@ConditionalOnMissingBean
+	public DaprGrpc.DaprStub daprStub(ManagedChannel channel,
+			DaprBinderConfigurationProperties daprBinderProperties,
+			ObjectProvider<DaprStubCustomizer> daprStubCustomizers) {
+		DaprGrpc.DaprStub daprStub = DaprGrpc.newStub(channel);
+		DaprBinderConfigurationProperties.DaprStub daprStubProperties = daprBinderProperties.getDaprStub();
+		PropertyMapper propertyMapper = PropertyMapper.get();
+		PropertyMapper.Source<DaprBinderConfigurationProperties.DaprStub> from = propertyMapper.from(daprStubProperties);
+		from.as(DaprBinderConfigurationProperties.DaprStub::getMaxInboundMessageSize).whenNonNull().to(daprStub::withMaxInboundMessageSize);
+		from.as(DaprBinderConfigurationProperties.DaprStub::getMaxOutboundMessageSize).whenNonNull().to(daprStub::withMaxOutboundMessageSize);
+		from.as(DaprBinderConfigurationProperties.DaprStub::getCompression).whenNonNull().to(daprStub::withCompression);
+		daprStubCustomizers.stream().forEach(daprStubCustomizer -> daprStubCustomizer.customize(daprStub));
+		return daprStub;
 	}
 
 	@Bean
