@@ -1,0 +1,13 @@
+spring:
+  cloud:
+    stream:
+      function:
+        definition: supply
+      bindings:
+        supply-out-0:
+          destination: <EVENT_HUB_NAME>
+      dapr:
+        bindings:
+          supply-out-0:
+            producer:
+              pubsubName: eventhubs-pubsub

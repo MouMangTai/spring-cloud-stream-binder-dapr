@@ -1,0 +1,5 @@
+componentType: pubsub.azure.eventhubs
+version: v1
+metadata:
+  - name: connectionString
+    value: "<CONNECTION_STRING>"
