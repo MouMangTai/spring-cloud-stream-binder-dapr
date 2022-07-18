@@ -1,0 +1,16 @@
+spring:
+  cloud:
+    azure:
+      eventhubs:
+        connection-string: <CONNECTION_STRING>
+    stream:
+      function:
+        definition: supply
+      bindings:
+        supply-out-0:
+          destination: <EVENT_HUB_NAME>
+      eventhubs:
+        bindings:
+          supply-out-0:
+            producer:
+              sync: true
