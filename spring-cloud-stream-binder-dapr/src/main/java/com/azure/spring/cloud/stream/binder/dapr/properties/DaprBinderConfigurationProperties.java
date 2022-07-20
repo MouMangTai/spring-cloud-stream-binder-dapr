@@ -341,7 +341,7 @@ public class DaprBinderConfigurationProperties {
 	 */
 	public static final class DaprStub {
 		/**
-		 * Returns a new stub that limits the maximum acceptable message size from a remote peer.
+		 * Limits the maximum acceptable message size from a remote peer.
 		 *
 		 * <p>If unset, the {@link ManagedChannel#maxInboundMessageSize} limit is used.
 		 */

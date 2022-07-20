@@ -5,9 +5,16 @@ spring:
         definition: supply
       bindings:
         supply-out-0:
-          destination: <EVENT_HUB_NAME>
+          destination: dapreventhub
       dapr:
         bindings:
           supply-out-0:
             producer:
               pubsubName: eventhubs-pubsub
+grpc:
+  server:
+    port: 9090
+dapr:
+  client.pubsub.subscriptions:
+    - pubsubName: eventhubs-pubsub
+      topic: dapreventhub

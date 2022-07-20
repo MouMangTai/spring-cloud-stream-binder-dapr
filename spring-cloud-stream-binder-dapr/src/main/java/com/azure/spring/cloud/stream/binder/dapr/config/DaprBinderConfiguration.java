@@ -14,11 +14,15 @@ import io.dapr.v1.DaprGrpc;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.context.properties.PropertyMapper;
 import org.springframework.cloud.stream.binder.Binder;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -28,7 +32,27 @@ import org.springframework.context.annotation.Configuration;
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnMissingBean(Binder.class)
 @EnableConfigurationProperties({ DaprBinderConfigurationProperties.class, DaprExtendedBindingProperties.class })
-public class DaprBinderConfiguration {
+public class DaprBinderConfiguration implements ApplicationContextAware {
+
+	private ApplicationContext applicationContext;
+
+	@Bean
+	public BeanPostProcessor beanPostProcessor() {
+		System.out.println("dapr_context 初始化了 bean BeanPostProcessor");
+		return new BeanPostProcessor() {
+			@Override
+			public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+				System.out.println("dapr_context 加载了bean " + beanName);
+				return bean;
+			}
+
+			@Override
+			public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+				return bean;
+			}
+		};
+	}
+
 	@Bean
 	@ConditionalOnMissingBean
 	public DaprBinderProvisioner daprBinderProvisioner() {
@@ -108,5 +132,10 @@ public class DaprBinderConfiguration {
 				daprStub,
 				daprExtendedBindingProperties,
 				daprMessageConverter);
+	}
+
+	@Override
+	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+		this.applicationContext = applicationContext;
 	}
 }

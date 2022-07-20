@@ -4,13 +4,18 @@ This is a local publisher sample of Spring Cloud Stream Binder Dapr, demonstrate
 
 ## Pre-requisites
 - [Dapr and Dapr Cli](https://docs.dapr.io/getting-started/install-dapr-cli/)
-- [Azure Event Hub](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-create)
+- [Azure Event Hubs](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-create)
+- [Azure Storage Account](https://docs.microsoft.com/en-us/azure/storage/common/storage-account-create?tabs=azure-portal)
+
 ## QuickStart
 
 ### 1. Configure the Pub/Sub component
 
 Replace the `<CONNECTION_STRING>` placeholder with Event Hub connection string in the `pubsub.yaml` file. This file helps enable your Dapr app to access your Event Hub.
-Refer [Get Event Hub Connection String](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string#azure-cli) for namespace connection string
+Refer [Get Event Hub Connection String](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string#azure-cli) for namespace connection string.
+
+Replace the `<STORAGE_ACCOUNT_NAME>`、`<STORAGE_ACCOUNT_KEY>` and `<STORAGE_CONTAINER_NAME>` placeholders.
+Refer [Manage storage account access keys](https://docs.microsoft.com/en-us/azure/storage/common/storage-account-keys-manage?tabs=azure-portal) for information such as storage account access keys.
 ```yaml
 apiVersion: dapr.io/v1alpha1
 kind: Component
@@ -23,6 +28,12 @@ spec:
   metadata:
     - name: connectionString
       value: "<CONNECTION_STRING>"
+    - name: storageAccountName
+      value: "<STORAGE_ACCOUNT_NAME>"
+    - name: storageAccountKey
+      value: "<STORAGE_ACCOUNT_KEY>"
+    - name: storageContainerName
+      value: "<STORAGE_CONTAINER_NAME>"
 ```
 
 Replace the `<EVENT_HUB_NAME>` placeholder with Event Hub name in the `application.yaml` file.
