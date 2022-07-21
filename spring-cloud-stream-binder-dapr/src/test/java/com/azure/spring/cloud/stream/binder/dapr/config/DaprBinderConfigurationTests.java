@@ -8,6 +8,7 @@ import com.azure.spring.cloud.stream.binder.dapr.properties.DaprBinderConfigurat
 import com.azure.spring.cloud.stream.binder.dapr.properties.DaprExtendedBindingProperties;
 import com.azure.spring.cloud.stream.binder.dapr.properties.DaprProducerProperties;
 import com.azure.spring.cloud.stream.binder.dapr.provisioning.DaprBinderProvisioner;
+import com.azure.spring.cloud.stream.binder.dapr.service.DaprGrpcService;
 import io.dapr.v1.DaprGrpc;
 import org.junit.jupiter.api.Test;
 
@@ -36,6 +37,7 @@ class DaprBinderConfigurationTests {
 	@Test
 	void testDefaultConfiguration() {
 		this.contextRunner
+				.withBean(DaprGrpcService.class, () -> mock(DaprGrpcService.class))
 				.run(context -> {
 					assertThat(context).hasSingleBean(DaprBinderConfiguration.class);
 					assertThat(context).hasSingleBean(DaprExtendedBindingProperties.class);
@@ -43,12 +45,14 @@ class DaprBinderConfigurationTests {
 					assertThat(context).hasSingleBean(DaprMessageChannelBinder.class);
 					assertThat(context).hasSingleBean(DaprBinderConfigurationProperties.class);
 					assertThat(context).hasSingleBean(DaprGrpc.DaprStub.class);
+					assertThat(context).hasSingleBean(DaprGrpcService.class);
 				});
 	}
 
 	@Test
 	void testExtendedBindingPropertiesShouldBind() {
 		this.contextRunner
+				.withBean(DaprGrpcService.class, () -> mock(DaprGrpcService.class))
 				.withPropertyValues(
 						"spring.cloud.stream.dapr.bindings.input.producer.pubsub-name=fake-pubsub-name",
 
