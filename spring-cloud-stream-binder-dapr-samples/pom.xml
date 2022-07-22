@@ -8,9 +8,9 @@
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<modules>
-		<module>local-dapr-sample</module>
-		<module>azure-container-app-dapr-sample</module>
-		<module>azure-container-app-eventhub-sample</module>
+		<module>local-dapr</module>
+		<module>azure-container-app-dapr</module>
+		<module>azure-container-app-eventhubs</module>
 	</modules>
 
 	<parent>
