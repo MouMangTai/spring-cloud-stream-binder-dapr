@@ -72,7 +72,11 @@ class DaprBinderConfigurationTests {
 						"spring.cloud.stream.dapr.binder.managed-channel.maxRetryAttempts=5000",
 						"spring.cloud.stream.dapr.binder.managed-channel.maxTraceEvents=6000",
 						"spring.cloud.stream.dapr.binder.managed-channel.keepAliveWithoutCalls=true",
-						"spring.cloud.stream.dapr.binder.managed-channel.negotiationType=TLS"
+						"spring.cloud.stream.dapr.binder.managed-channel.negotiationType=TLS",
+
+						"spring.cloud.stream.dapr.binder.dapr-stub.maxInboundMessageSize=20",
+						"spring.cloud.stream.dapr.binder.dapr-stub.maxOutboundMessageSize=20",
+						"spring.cloud.stream.dapr.binder.dapr-stub.compression=fake-compression"
 				)
 				.run(context -> {
 					assertThat(context).hasSingleBean(DaprMessageChannelBinder.class);
@@ -99,6 +103,12 @@ class DaprBinderConfigurationTests {
 					assertThat(managedChannel.getMaxTraceEvents()).isEqualTo(6000);
 					assertThat(managedChannel.isKeepAliveWithoutCalls()).isEqualTo(true);
 					assertThat(managedChannel.getNegotiationType()).isEqualTo(DaprBinderConfigurationProperties.NegotiationType.TLS);
+
+					DaprBinderConfigurationProperties.DaprStub daprStub = binderProperties.getDaprStub();
+					assertThat(daprStub.getMaxInboundMessageSize()).isEqualTo(20);
+					assertThat(daprStub.getMaxOutboundMessageSize()).isEqualTo(20);
+					assertThat(daprStub.getCompression()).isEqualTo("fake-compression");
+
 				});
 	}
 }

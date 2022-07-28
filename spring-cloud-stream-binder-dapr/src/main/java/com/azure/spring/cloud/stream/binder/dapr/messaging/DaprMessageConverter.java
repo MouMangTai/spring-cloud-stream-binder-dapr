@@ -3,6 +3,7 @@
 
 package com.azure.spring.cloud.stream.binder.dapr.messaging;
 
+import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -42,12 +43,16 @@ public class DaprMessageConverter implements DaprConverter<DaprProtos.PublishEve
 	public DaprProtos.PublishEventRequest.Builder fromMessage(Message<?> message) {
 		Map<String, Object> copyHeaders = new HashMap(message.getHeaders());
 		DaprProtos.PublishEventRequest.Builder builder = DaprProtos.PublishEventRequest.newBuilder();
+		DaprMessage daprMessage = new DaprMessage((byte[]) message.getPayload(), message.getHeaders());
+		String stringMessage;
 		try {
-			builder.setData(ByteString.copyFrom(objectMapper.writeValueAsBytes(message)));
+			stringMessage = objectMapper.writeValueAsString(daprMessage);
 		}
 		catch (JsonProcessingException e) {
-			throw new ConversionException("Failed to convert Spring message to Dapr PublishEventRequest Builder data:" + e);
+			throw new ConversionException("Failed to convert Dapr message to json string:" + e);
 		}
+		ByteString byteString = ByteString.copyFrom(stringMessage, Charset.defaultCharset());
+		builder.setData(byteString);
 		PropertyMapper propertyMapper = PropertyMapper.get().alwaysApplyingWhenNonNull();
 		propertyMapper.from((String) copyHeaders.remove(DaprHeaders.CONTENT_TYPE)).to(builder::setDataContentType);
 		propertyMapper.from((Map<String, String>) copyHeaders.remove(DaprHeaders.SPECIFIED_BROKER_METADATA)).to(builder::putAllMetadata);
@@ -59,6 +64,13 @@ public class DaprMessageConverter implements DaprConverter<DaprProtos.PublishEve
 
 	@Override
 	public Message toMessage(DaprAppCallbackProtos.TopicEventRequest topicEventRequest) {
-		return MessageBuilder.withPayload(topicEventRequest.getData().toString()).build();
+		DaprMessage daprMessage;
+		try {
+			daprMessage = objectMapper.readValue(new String(topicEventRequest.getData().toByteArray()), DaprMessage.class);
+		}
+		catch (Exception e) {
+			throw new ConversionException("Failed to convert json string to Dapr message:" + e);
+		}
+		return MessageBuilder.withPayload(daprMessage.getPayload()).copyHeaders(daprMessage.getHeaders()).build();
 	}
 }

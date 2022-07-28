@@ -10,22 +10,16 @@ import io.dapr.v1.DaprAppCallbackProtos;
 public class DaprMessageConsumer implements Consumer<DaprAppCallbackProtos.TopicEventRequest> {
 	private final String topic;
 	private final String pubsubName;
-	private DaprMessageConsumer successor;
-
 	private Consumer<DaprAppCallbackProtos.TopicEventRequest> integrationConsumer;
 	public DaprMessageConsumer(String pubsubName, String topic, Consumer<DaprAppCallbackProtos.TopicEventRequest> integrationConsumer) {
 		this.pubsubName = pubsubName;
 		this.topic = topic;
 		this.integrationConsumer = integrationConsumer;
 	}
-
 	@Override
 	public void accept(DaprAppCallbackProtos.TopicEventRequest request) {
 		if (this.topic.equals(request.getTopic()) && this.pubsubName.equals(request.getPubsubName())) {
 			integrationConsumer.accept(request);
-		}
-		else {
-			successor.accept(request);
 		}
 	}
 }

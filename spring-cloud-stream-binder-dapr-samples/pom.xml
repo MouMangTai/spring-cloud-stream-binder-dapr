@@ -7,11 +7,6 @@
 	<artifactId>spring-cloud-stream-binder-dapr-samples</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<modules>
-		<module>local-dapr</module>
-		<module>azure-container-app-dapr</module>
-		<module>azure-container-app-eventhubs</module>
-	</modules>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -19,4 +14,10 @@
 		<version>2.7.1</version>
 		<relativePath/>
 	</parent>
+
+	<modules>
+		<module>local-dapr</module>
+		<module>azure-container-app-dapr</module>
+		<module>migration-kafka-to-dapr</module>
+	</modules>
 </project>

@@ -16,7 +16,7 @@ import net.devh.boot.grpc.server.service.GrpcService;
 @GrpcService
 public class DaprGrpcService extends AppCallbackGrpc.AppCallbackImplBase {
 	private final List<DaprAppCallbackProtos.TopicSubscription> topicSubscriptionList = new ArrayList<>();
-	private final List<Consumer<DaprAppCallbackProtos.TopicEventRequest>> consumers = new ArrayList<>();
+	private List<Consumer<DaprAppCallbackProtos.TopicEventRequest>> consumers = new ArrayList<>();
 
 	@Override
 	public void listTopicSubscriptions(Empty request,
@@ -40,31 +40,25 @@ public class DaprGrpcService extends AppCallbackGrpc.AppCallbackImplBase {
 	public void onTopicEvent(DaprAppCallbackProtos.TopicEventRequest request,
 			StreamObserver<DaprAppCallbackProtos.TopicEventResponse> responseObserver) {
 		try {
-			// TODO
-			for (Consumer consumer : this.consumers) {
-				consumer.accept(request);
-			}
+			consumers.forEach(consumer -> consumer.accept(request));
 			DaprAppCallbackProtos.TopicEventResponse response =
 					DaprAppCallbackProtos.TopicEventResponse.newBuilder()
 							.setStatus(DaprAppCallbackProtos.TopicEventResponse.TopicEventResponseStatus.SUCCESS)
 							.build();
 			responseObserver.onNext(response);
+			responseObserver.onCompleted();
 		}
 		catch (Throwable e) {
 			responseObserver.onError(e);
 		}
-		finally {
-			responseObserver.onCompleted();
-		}
 	}
 
-	public boolean registerConsumer(String pubsubName, String topic, Consumer<DaprAppCallbackProtos.TopicEventRequest> consumer) {
-		this.topicSubscriptionList.add(DaprAppCallbackProtos.TopicSubscription
+	public void registerConsumer(String pubsubName, String topic, Consumer<DaprAppCallbackProtos.TopicEventRequest> consumer) {
+		topicSubscriptionList.add(DaprAppCallbackProtos.TopicSubscription
 				.newBuilder()
 				.setPubsubName(pubsubName)
 				.setTopic(topic)
 				.build());
-		this.consumers.add(consumer);
-		return true;
+		consumers.add(consumer);
 	}
 }

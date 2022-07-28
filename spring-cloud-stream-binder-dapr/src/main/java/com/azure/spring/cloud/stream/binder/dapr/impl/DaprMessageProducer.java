@@ -26,7 +26,7 @@ public class DaprMessageProducer extends MessageProducerSupport {
 	}
 
 	private void onMessage(DaprAppCallbackProtos.TopicEventRequest request) {
-		Message<String> message = daprMessageConverter.toMessage(request);
+		Message message = daprMessageConverter.toMessage(request);
 		sendMessage(message);
 	}
 }

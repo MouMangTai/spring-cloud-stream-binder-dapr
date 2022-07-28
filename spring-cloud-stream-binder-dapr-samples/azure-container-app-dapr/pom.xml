@@ -13,16 +13,11 @@
 	</parent>
 
 	<properties>
-		<docker.image.prefix>daprsampleregistry.azurecr.io</docker.image.prefix>
-		<java.version>1.8</java.version>
-		<jib-maven-plugin.version>2.2.0</jib-maven-plugin.version>
+		<docker.account.username>username</docker.account.username>
+		<docker.account.password>password</docker.account.password>
 	</properties>
 
 	<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
 		<dependency>
 			<groupId>com.azure.spring</groupId>
 			<artifactId>spring-cloud-starter-stream-dapr</artifactId>
@@ -33,18 +28,28 @@
 	<build>
 		<plugins>
 			<plugin>
-				<artifactId>jib-maven-plugin</artifactId>
-				<groupId>com.google.cloud.tools</groupId>
-				<version>${jib-maven-plugin.version}</version>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<from>
-						<image>mcr.microsoft.com/java/maven:11-zulu-debian10</image>
-					</from>
-					<to>
-						<image>${docker.image.prefix}/${project.artifactId}</image>
-					</to>
+					<image>
+						<name>${docker.account.username}/${project.artifactId}</name>
+						<publish>true</publish>
+					</image>
+					<docker>
+						<publishRegistry>
+							<username>${docker.account.username}</username>
+							<password>${docker.account.password}</password>
+						</publishRegistry>
+					</docker>
 				</configuration>
 			</plugin>
 		</plugins>
+
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
 	</build>
+
 </project>

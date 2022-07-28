@@ -3,6 +3,10 @@
 
 package com.azure.spring.cloud.stream.binder.dapr.messaging;
 
+import java.io.IOException;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import org.springframework.lang.Nullable;
 import org.springframework.messaging.Message;
 
@@ -21,7 +25,7 @@ public interface DaprConverter<I, O> {
 	 * @return the result of the conversion, or {@code null} if the converter cannot perform the conversion.
 	 */
 	@Nullable
-	I fromMessage(Message<?> message);
+	I fromMessage(Message<?> message) throws JsonProcessingException;
 
 	/**
 	 * Create a {@link Message} whose payload is the result of converting the given
@@ -31,5 +35,5 @@ public interface DaprConverter<I, O> {
 	 * Object type or the target media type
 	 */
 	@Nullable
-	Message toMessage(O daprMessage);
+	Message toMessage(O daprMessage) throws IOException;
 }
