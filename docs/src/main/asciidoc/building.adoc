@@ -5,8 +5,6 @@
 
 Pre-requisites:
 
-
-
 - To compile, JDK {jdkversion} installed.
 
 The build uses the Maven wrapper so you don’t have to install a specific version of Maven. The main build command is

@@ -1,6 +1,5 @@
 [[spring-cloud-stream-binder-dapr-reference]]
 = Spring Cloud Stream Dapr Binder Reference Guide
-
 include::reference.adoc[]
 include::migration.adoc[]
 
