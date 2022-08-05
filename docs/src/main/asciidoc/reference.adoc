@@ -3,6 +3,8 @@
 
 To use Dapr binder, you need to add `spring-cloud-stream-binder-dapr` as a dependency to your Spring Cloud Stream application, as shown in the following example for Maven:
 
+
+
 [source,xml]
 ----
 <dependency>
