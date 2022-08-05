@@ -5,6 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.10">
+<meta name="author" content="== Reference Guide">
 <title>Spring Cloud Stream Dapr Binder Reference Guide</title>
 <link rel="stylesheet" href="css/spring.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -162,19 +163,17 @@ window.onload = function() {
 <body id="spring-cloud-stream-binder-dapr-reference" class="book toc2 toc-left">
 <div id="header">
 <h1>Spring Cloud Stream Dapr Binder Reference Guide</h1>
+<div class="details">
+<span id="author" class="author">== Reference Guide</span><br>
+<span id="revdate">=== 1. Usage</span>
+</div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
-<ul class="sectlevel1">
-<li><a href="#_reference_guide">Reference Guide</a>
 <ul class="sectlevel2">
-<li><a href="#_1_usage">1. Usage</a></li>
 <li><a href="#_2_dapr_binder_overview">2. Dapr Binder Overview</a></li>
 <li><a href="#_3_configuration_options">3. Configuration Options</a></li>
-</ul>
-</li>
 <li><a href="#_migration_guide">Migration Guide</a>
 <ul class="sectlevel2">
-<li><a href="#_1_update_dependency">1. Update dependency</a></li>
 <li><a href="#_2_update_application_yaml">2. Update application.yaml</a></li>
 <li><a href="#_3_configure_azure_event_hubs_component">3. Configure Azure Event Hubs component</a></li>
 <li><a href="#_4_run_application_with_dapr_sidecar">4. Run application with Dapr sidecar</a></li>
@@ -198,11 +197,8 @@ window.onload = function() {
 </div>
 </div>
 <div id="content">
-<div class="sect1">
-<h2 id="_reference_guide"><a class="link" href="#_reference_guide">Reference Guide</a></h2>
+<div id="preamble">
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="_1_usage"><a class="link" href="#_1_usage">1. Usage</a></h3>
 <div class="paragraph">
 <p>To use Dapr binder, you need to add <code>spring-cloud-stream-binder-dapr</code> as a dependency to your Spring Cloud Stream application, as shown in the following example for Maven:</p>
 </div>
@@ -223,6 +219,7 @@ window.onload = function() {
    &lt;groupId&gt;com.azure.spring&lt;/groupId&gt;
    &lt;artifactId&gt;spring-cloud-starter-stream-dapr&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -482,13 +479,13 @@ PubsubName must be specified and has no default value.
 </table>
 </div>
 </div>
-</div>
-</div>
 <div class="sect1">
 <h2 id="_migration_guide"><a class="link" href="#_migration_guide">Migration Guide</a></h2>
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="_1_update_dependency"><a class="link" href="#_1_update_dependency">1. Update dependency</a></h3>
+<div class="paragraph">
+<p>ssss
+=== 1. Update dependency</p>
+</div>
 <div class="paragraph">
 <p>Remove <code>spring-cloud-azure-stream-binder-eventhubs</code> dependencies.</p>
 </div>
@@ -509,7 +506,6 @@ PubsubName must be specified and has no default value.
   &lt;groupId&gt;com.azure.spring&lt;/groupId&gt;
   &lt;artifactId&gt;spring-cloud-stream-binder-dapr&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
-</div>
 </div>
 </div>
 <div class="sect2">

@@ -166,7 +166,6 @@ window.onload = function() {
 <ul class="sectlevel1">
 <li><a href="#_migration_guide">Migration Guide</a>
 <ul class="sectlevel2">
-<li><a href="#_1_update_dependency">1. Update dependency</a></li>
 <li><a href="#_2_update_application_yaml">2. Update application.yaml</a></li>
 <li><a href="#_3_configure_azure_event_hubs_component">3. Configure Azure Event Hubs component</a></li>
 <li><a href="#_4_run_application_with_dapr_sidecar">4. Run application with Dapr sidecar</a></li>
@@ -180,8 +179,10 @@ window.onload = function() {
 <div class="sect1">
 <h2 id="_migration_guide"><a class="link" href="#_migration_guide">Migration Guide</a></h2>
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="_1_update_dependency"><a class="link" href="#_1_update_dependency">1. Update dependency</a></h3>
+<div class="paragraph">
+<p>ssss
+=== 1. Update dependency</p>
+</div>
 <div class="paragraph">
 <p>Remove <code>spring-cloud-azure-stream-binder-eventhubs</code> dependencies.</p>
 </div>
@@ -202,7 +203,6 @@ window.onload = function() {
   &lt;groupId&gt;com.azure.spring&lt;/groupId&gt;
   &lt;artifactId&gt;spring-cloud-stream-binder-dapr&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
-</div>
 </div>
 </div>
 <div class="sect2">
