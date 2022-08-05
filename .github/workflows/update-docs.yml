@@ -1,0 +1,14 @@
+name: Update Docs
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Update Docs
+        run: |
+          ./docs/src/main/asciidoc/ghpages.sh --build
