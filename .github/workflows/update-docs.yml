@@ -10,5 +10,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Update Docs
-        run: |
-          ./docs/src/main/asciidoc/ghpages.sh --build
+      run: |
+        ./docs/src/main/asciidoc/ghpages.sh --build
